@@ -50,68 +50,70 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                                 (
                                     data.map((product: any, index: number) => {
                                         return (
-                                            <Box display="flex"  m="10px 0px" key={product.id} >
-                                                <Box display="flex" justifyContent={{md:"start", sm:"center", xs:"center"}} flexWrap="wrap">
-                                                    <Card sx={{
-                                                        boxShadow: 0,
-                                                        border: "1px solid #CBCECE",
-                                                        width: "200px",
-                                                        height: "200px",
-                                                        textAlign: "center",
-                                                        p: "20px",
-                                                        borderRadius: "12px"
-                                                    }}
-                                                    >
-                                                        <Image
-                                                            height="194"
-                                                            width="194"
-                                                            src={product.image}
-                                                            alt={`product image ${product.id}`}
-                                                        />
-                                                    </Card>
-                                                </Box>
-                                                <Box m="0px 25px" textAlign={{ md: "right", sm: "center", xs: "center" }}>
-                                                    <Typography maxWidth="600px" color="CaptionText" fontWeight="bold" variant="h6">
-                                                        {product.title}
-                                                    </Typography>
-                                                    <Typography color="GrayText" fontWeight="bold" variant="h6" sx={{ m: "15px 0px" }}>
-                                                        {product.category}
-                                                    </Typography>
-                                                    <Box
-                                                        display="flex"
-                                                        m="15px 0px"
-                                                        justifyContent={
-                                                            {
-                                                                md: "start",
-                                                                sm: "center",
-                                                                xs: "center"
-                                                            }
-                                                        }>
-                                                        <Typography color="GrayText">
-                                                            حجم خریداری شده:
-                                                        </Typography>
-                                                        <VolumePerfumeBox sx={{ margin: "0px 10px", padding: "0px 20px" }}>
-                                                            <Typography fontWeight="bold">
-                                                                {product.rating.count} میل
-                                                            </Typography>
-                                                        </VolumePerfumeBox>
+                                            <>
+                                                <Box display="flex" m="10px 0px" key={product.id} >
+                                                    <Box display="flex" justifyContent={{ md: "start", sm: "center", xs: "center" }} flexWrap="wrap">
+                                                        <Card sx={{
+                                                            boxShadow: 0,
+                                                            border: "1px solid #CBCECE",
+                                                            width: "200px",
+                                                            height: "200px",
+                                                            textAlign: "center",
+                                                            p: "20px",
+                                                            borderRadius: "12px"
+                                                        }}
+                                                        >
+                                                            <Image
+                                                                height="194"
+                                                                width="194"
+                                                                src={product.image}
+                                                                alt={`product image ${product.id}`}
+                                                            />
+                                                        </Card>
                                                     </Box>
-                                                    <Box
-                                                        display="flex"
-                                                        m="15px 0px"
-                                                        justifyContent={
-                                                            {
-                                                                md: "start",
-                                                                sm: "center",
-                                                                xs: "center"
-                                                            }
-                                                        }>
-                                                        <Typography sx={{ color: "themeColor.main" }} fontWeight="bold" variant="h5">
-                                                            {product.price}
+                                                    <Box m="0px 25px" textAlign={{ md: "right", sm: "center", xs: "center" }}>
+                                                        <Typography maxWidth="300px" color="CaptionText" fontWeight="bold" variant="h6">
+                                                            {product.title}
                                                         </Typography>
-                                                        <Typography sx={{ m: "0px 30px" }} color="GrayText" fontWeight="bold" variant="h6">
-                                                            ارسال رایگان
+                                                        <Typography color="GrayText" fontWeight="bold" variant="h6" sx={{ m: "15px 0px" }}>
+                                                            {product.category}
                                                         </Typography>
+                                                        <Box
+                                                            display="flex"
+                                                            m="15px 0px"
+                                                            justifyContent={
+                                                                {
+                                                                    md: "start",
+                                                                    sm: "center",
+                                                                    xs: "center"
+                                                                }
+                                                            }>
+                                                            <Typography color="GrayText">
+                                                                حجم خریداری شده:
+                                                            </Typography>
+                                                            <VolumePerfumeBox sx={{ margin: "0px 10px", padding: "0px 20px" }}>
+                                                                <Typography fontWeight="bold">
+                                                                    {product.rating.count} میل
+                                                                </Typography>
+                                                            </VolumePerfumeBox>
+                                                        </Box>
+                                                        <Box
+                                                            display="flex"
+                                                            m="15px 0px"
+                                                            justifyContent={
+                                                                {
+                                                                    md: "start",
+                                                                    sm: "center",
+                                                                    xs: "center"
+                                                                }
+                                                            }>
+                                                            <Typography sx={{ color: "themeColor.main" }} fontWeight="bold" variant="h5">
+                                                                {product.price}
+                                                            </Typography>
+                                                            <Typography sx={{ m: "0px 30px" }} color="GrayText" fontWeight="bold" variant="h6">
+                                                                ارسال رایگان
+                                                            </Typography>
+                                                        </Box>
                                                     </Box>
                                                 </Box>
                                                 {
@@ -128,7 +130,7 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                                                         :
                                                         ""
                                                 }
-                                            </Box>
+                                            </>
                                         )
                                     })
                                 )
