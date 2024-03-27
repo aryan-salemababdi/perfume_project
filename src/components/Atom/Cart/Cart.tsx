@@ -1,0 +1,196 @@
+import React from 'react';
+import { NextPage } from 'next';
+import { useQuery } from '@tanstack/react-query';
+import Image from 'next/image';
+import type { ICartPage } from '@/components/Molecule/CartPage/CartPage';
+import { useRandomItem } from './useRandomItem';
+import {
+    Box,
+    Button,
+    Card,
+    Container,
+    Typography,
+    Divider
+} from '@mui/material';
+import { HeaderCartPrice, VolumePerfumeBox } from './styled';
+
+const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
+
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ["products"],
+        queryFn: () =>
+            fetch("https://fakestoreapi.com/products").then(res =>
+                res.json()
+            ),
+        initialData: products
+    });
+
+    const onSubmitProduct = (cash: string, submit: boolean): void => {
+        onPayment?.(cash, submit);
+    }
+
+    // select randomData for cart page ( i have'nt shop page )
+    const selectItem = useRandomItem(data, 3);
+
+    console.log(selectItem)
+
+    return (
+        <>
+            {/* This component must be added to the mobile version. (The mobile component is different.) */}
+
+            <Container sx={{ m: "30px 0px" }}>
+                <Box
+                    display="flex"
+                    justifyContent={{
+                        xs: "center",
+                        sm: "center",
+                        md: "space-between"
+                    }}
+                    flexWrap="wrap"
+                >
+                    <Box>
+                        {
+                            selectItem.map((product: any, index: number) => {
+                                return (
+                                    <div key={product.id}>
+                                        <Box display="flex" m="30px 0px">
+                                            <Box display="flex" justifyContent="center" flexWrap="wrap">
+                                                <Card sx={{
+                                                    boxShadow: 0,
+                                                    border: "1px solid #CBCECE",
+                                                    width: "200px",
+                                                    height: "200px",
+                                                    textAlign: "center",
+                                                    p: "20px",
+                                                    borderRadius: "12px"
+                                                }}
+                                                >
+                                                    <Image
+                                                        height="194"
+                                                        width="194"
+                                                        src={product.image}
+                                                        alt="Product image"
+                                                    />
+                                                </Card>
+                                            </Box>
+                                            <Box m="0px 25px" textAlign={{ md: "right", sm: "center", xs: "center" }}>
+                                                <Typography color="CaptionText" fontWeight="bold" variant="h6">
+                                                    {product.title}
+                                                </Typography>
+                                                <Typography color="GrayText" fontWeight="bold" variant="h6" sx={{ m: "15px 0px" }}>
+                                                    {product.category}
+                                                </Typography>
+                                                <Box
+                                                    display="flex"
+                                                    m="15px 0px"
+                                                    justifyContent={
+                                                        {
+                                                            md: "start",
+                                                            sm: "center",
+                                                            xs: "center"
+                                                        }
+                                                    }>
+                                                    <Typography color="GrayText">
+                                                        حجم خریداری شده:
+                                                    </Typography>
+                                                    <VolumePerfumeBox sx={{ margin: "0px 10px", padding: "0px 20px" }}>
+                                                        <Typography fontWeight="bold">
+                                                            {product.rating.count} میل
+                                                        </Typography>
+                                                    </VolumePerfumeBox>
+                                                </Box>
+                                                <Box
+                                                    display="flex"
+                                                    m="15px 0px"
+                                                    justifyContent={
+                                                        {
+                                                            md: "start",
+                                                            sm: "center",
+                                                            xs: "center"
+                                                        }
+                                                    }>
+                                                    <Typography sx={{ color: "themeColor.main" }} fontWeight="bold" variant="h5">
+                                                        {product.price}
+                                                    </Typography>
+                                                    <Typography sx={{ m: "0px 30px" }} color="GrayText" fontWeight="bold" variant="h6">
+                                                        ارسال رایگان
+                                                    </Typography>
+                                                </Box>
+                                            </Box>
+                                            {
+                                                (index < selectItem.length - 1) ? (
+                                                    <Box display="flex" justifyContent="center" m="20px 0px">
+                                                        <Divider sx={
+                                                            {
+                                                                width: { md: "80%", sm: "50%", xs: "50%" },
+                                                                bgcolor: "themeColor.navy"
+                                                            }
+                                                        } />
+                                                    </Box>
+                                                )
+                                                    :
+                                                    ""
+                                            }
+                                        </Box>
+                                    </div>
+                                )
+                            })
+                        }
+                    </Box>
+                    <Box textAlign="center">
+                        <Box display="flex" justifyContent="center">
+                            <Card sx={{ width: "300px", boxShadow: 5 }}>
+                                <HeaderCartPrice>
+                                    <Typography fontWeight="bold" variant="h6">
+                                        فاکتور شما
+                                    </Typography>
+                                </HeaderCartPrice>
+                                <Box textAlign="center" m="20px">
+                                    <Box>
+                                        <Typography color="GrayText">
+                                            مجموع تخفیف:
+                                        </Typography>
+                                        <Typography color="error" m="5px 0px" fontWeight="bold" variant="h6">
+                                            1/000/000 تومان
+                                        </Typography>
+                                    </Box>
+                                    <Box marginTop="40px" marginBottom="20px">
+                                        <Typography color="GrayText">
+                                            مبلغ قابل پرداخت:
+                                        </Typography>
+                                        <Typography sx={{ color: "themeColor.main" }} m="5px 0px" fontWeight="bold" variant="h5">
+                                            12/000/000 تومان
+                                        </Typography>
+                                    </Box>
+                                    <Button
+                                        variant="contained"
+                                        sx={{
+                                            backgroundColor: "themeColor.Primarhy",
+                                            ":hover": { bgcolor: "themeColor.Primarhy" }
+                                        }}
+                                        fullWidth
+                                        onClick={() => onSubmitProduct("300", true)}
+                                    >
+                                        <Typography sx={{ color: "themeColor.main" }} m="5px 0px" fontWeight="bold" variant="body1">
+                                            تایید سفارشات
+                                        </Typography>
+                                    </Button>
+                                </Box>
+                            </Card>
+                        </Box>
+                        <Box width={{ md: "300px", sm: "300px" }}>
+                            <Typography sx={{ color: "themeColor.main" }} m="40px 0px" fontWeight="bold" variant="h6">
+                                ارسال رایگان به تمام کشور
+                            </Typography>
+                            <Typography color="GrayText" m="40px 0px" fontWeight="bold" variant="h6">
+                                هزینه سبد هنوز پرداخت نشده و در صورت اتمام موجودی از سبد حذف خواهد شد.
+                            </Typography>
+                        </Box>
+                    </Box>
+                </Box>
+            </Container>
+        </>
+    )
+}
+
+export default Cart;
