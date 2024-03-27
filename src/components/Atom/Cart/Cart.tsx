@@ -34,9 +34,11 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
     return (
         <>
             <Container sx={{ m: "30px 0px" }}>
+                
                 {/* This component must be added to the mobile version. (The mobile component is different.) */}
+
                 <Box
-                    display="flex"
+                    display={{ md: "flex", sm: "flex", xs: "none" }}
                     justifyContent={{
                         xs: "center",
                         sm: "space-between",
@@ -56,7 +58,7 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                                                         <Card sx={{
                                                             boxShadow: 0,
                                                             border: "1px solid #CBCECE",
-                                                            maxWidth:200,
+                                                            maxWidth: 200,
                                                             textAlign: "center",
                                                             p: "20px",
                                                             borderRadius: "12px",
