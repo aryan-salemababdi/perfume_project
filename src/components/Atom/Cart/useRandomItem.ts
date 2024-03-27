@@ -1,6 +1,6 @@
 import type { ICartPage } from "@/components/Molecule/CartPage/CartPage";
 
-const useRandomItem = (productsArray: ICartPage[], numberOfProductsToSelect: number): ICartPage[] => {
+const useRandomItem = (productsArray: ICartPage[], numberOfProductsToSelect: number) => {
     // select random
     const selectedProducts: ICartPage[] = [];
     const copiedProductsArray: ICartPage[] = [...productsArray];
