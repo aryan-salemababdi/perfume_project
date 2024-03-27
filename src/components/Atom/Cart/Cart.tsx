@@ -50,7 +50,7 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                                 (
                                     data.map((product: any, index: number) => {
                                         return (
-                                            <Box  m="10px 0px" key={product.id} >
+                                            <Box display="flex"  m="10px 0px" key={product.id} >
                                                 <Box display="flex" justifyContent={{md:"start", sm:"center", xs:"center"}} flexWrap="wrap">
                                                     <Card sx={{
                                                         boxShadow: 0,
