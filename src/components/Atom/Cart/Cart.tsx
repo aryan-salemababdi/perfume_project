@@ -39,7 +39,7 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                     display="flex"
                     justifyContent={{
                         xs: "center",
-                        sm: "center",
+                        sm: "space-between",
                         md: "space-between"
                     }}
                     flexWrap="wrap"
@@ -56,23 +56,22 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                                                         <Card sx={{
                                                             boxShadow: 0,
                                                             border: "1px solid #CBCECE",
-                                                            width: "200px",
-                                                            height: "200px",
+                                                            maxWidth:200,
                                                             textAlign: "center",
                                                             p: "20px",
-                                                            borderRadius: "12px"
+                                                            borderRadius: "12px",
                                                         }}
                                                         >
                                                             <Image
-                                                                height="194"
-                                                                width="194"
+                                                                height="213"
+                                                                width="213"
                                                                 src={product.image}
                                                                 alt={`product image ${product.id}`}
                                                             />
                                                         </Card>
                                                     </Box>
-                                                    <Box m="0px 25px" textAlign={{ md: "right", sm: "center", xs: "center" }}>
-                                                        <Typography maxWidth="300px" color="CaptionText" fontWeight="bold" variant="h6">
+                                                    <Box maxWidth="270px" mr="25px" textAlign={{ md: "right", sm: "center", xs: "center" }}>
+                                                        <Typography color="CaptionText" fontWeight="bold" variant="h6">
                                                             {product.title}
                                                         </Typography>
                                                         <Typography color="GrayText" fontWeight="bold" variant="h6" sx={{ m: "15px 0px" }}>
@@ -118,7 +117,7 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                                                 </Box>
                                                 {
                                                     (index < data.length - 1) ? (
-                                                        <Box display="flex" justifyContent={{md:"start", sm:"center", xs:"center"}} m="20px 0px">
+                                                        <Box display="flex" justifyContent={{ md: "start", sm: "center", xs: "center" }} m="20px 0px">
                                                             <Divider sx={
                                                                 {
                                                                     width: "90%",
