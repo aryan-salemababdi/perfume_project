@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import ThemesProviders from '../providers/ThemesProviders';
 import TanstackProvider from '@/providers/TanstackProvider';
+import Providers from './../providers/rtkProviders';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,11 +25,13 @@ export default function RootLayout({
     <html lang="fa">
 
       <body dir='rtl'>
-        <TanstackProvider>
-          <ThemesProviders>
-            {children}
-          </ThemesProviders>
-        </TanstackProvider>
+        <Providers>
+          <TanstackProvider>
+            <ThemesProviders>
+              {children}
+            </ThemesProviders>
+          </TanstackProvider>
+        </Providers>
       </body>
     </html>
   )

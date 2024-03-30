@@ -12,9 +12,28 @@ import {
     Typography,
     Divider
 } from '@mui/material';
-import { HeaderCartPrice, VolumePerfumeBox } from './styled';
+import { HeaderCartPrice, ProductCounter, VolumePerfumeBox } from './styled';
+import CartMobile from './CartMobile';
+import { useDispatch, useSelector } from 'react-redux';
+import { increase } from '@/stores/slices/productsSlice/productsSlice';
+
+
+
+// icons
+import SupportAgent from '@/components/Icons/SupportAgent';
+import NewReleases from '@/components/Icons/NewReleases';
+import LocalShipping from '@/components/Icons/LocalShipping';
+import WorkspacePremium from './../../Icons/WorkspacePremium';
+import DeleteIcon from '@/components/Icons/DeleteIcon';
+import Vector from '@/components/Icons/Vector';
+
+
 
 const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
+
+    const state = useSelector((state: any) => state.products);
+
+    const dispatch = useDispatch();
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ["products"],
@@ -30,13 +49,16 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
     }
 
 
-
     return (
         <>
             <Container sx={{ m: "30px 0px" }}>
-                
-                {/* This component must be added to the mobile version. (The mobile component is different.) */}
-
+                <Box display={{ md: "none", sm: "none", xs: "block" }}>
+                    <CartMobile
+                        products={data}
+                        onSubmitClicked={(cash: string, submit: boolean) => {
+                            onPayment?.(cash, submit)
+                        }} />
+                </Box>
                 <Box
                     display={{ md: "flex", sm: "flex", xs: "none" }}
                     justifyContent={{
@@ -47,6 +69,23 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                     flexWrap="wrap"
                 >
                     <Box>
+                        <Box display="flex" justifyContent="space-between">
+                            <Box>
+                                <Box display="flex">
+                                    <Typography sx={{ color: "themeColor.dark" }} fontWeight="bold" variant="h6">
+                                        سبد خرید شما
+                                    </Typography>
+                                    <Typography sx={{ m: "3px 30px" }} color="gray" fontWeight="bold" variant="body1">
+                                        {data.length} کالا
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            <Box onClick={() => alert("delete products")}>
+                                <Typography color="error" fontWeight="bold" variant="h6">
+                                    خالی کردن سبد خرید
+                                </Typography>
+                            </Box>
+                        </Box>
                         {
                             !isLoading ?
                                 (
@@ -113,6 +152,30 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                                                             </Typography>
                                                             <Typography sx={{ m: "0px 30px" }} color="GrayText" fontWeight="bold" variant="h6">
                                                                 ارسال رایگان
+                                                            </Typography>
+                                                        </Box>
+                                                        <Box display="flex" alignItems="center" m="10px 0px">
+                                                            <ProductCounter sx={{
+                                                                display: "grid",
+                                                                gridTemplateColumns: "repeat(3,auto)",
+                                                            }}>
+                                                                <Box sx={{ cursor: "pointer" }} onClick={() => dispatch(increase(product.id))}>
+                                                                    +
+                                                                </Box>
+                                                                <Box>
+                                                                    1
+                                                                </Box>
+                                                                <Box sx={{ cursor: "pointer" }}>
+                                                                    <DeleteIcon />
+                                                                </Box>
+                                                            </ProductCounter>
+                                                            <Typography
+                                                                color="GrayText"
+                                                                fontWeight="bold"
+                                                                variant="body1"
+                                                                sx={{ m: "0px 10px" }}
+                                                            >
+                                                                حداکثر 3 عدد
                                                             </Typography>
                                                         </Box>
                                                     </Box>
@@ -182,7 +245,7 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                         </Box>
                         <Box width={{ md: "300px", sm: "300px" }}>
                             <Typography sx={{ color: "themeColor.main" }} m="40px 0px" fontWeight="bold" variant="h6">
-                                ارسال رایگان به تمام کشور
+                            <span><Vector /></span> ارسال رایگان به تمام کشور
                             </Typography>
                             <Typography color="GrayText" m="40px 0px" fontWeight="bold" variant="h6">
                                 هزینه سبد هنوز پرداخت نشده و در صورت اتمام موجودی از سبد حذف خواهد شد.
@@ -191,6 +254,47 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                     </Box>
                 </Box>
             </Container>
+            <Box display={{ md: "block", sm: "block", xs: "none" }}>
+                <Divider sx={{ width: "100%" }} />
+                <Box textAlign="center" m="40px 0px">
+                    <Typography sx={{ color: "themeColor.main" }} fontWeight="bold" variant="h5">
+                        چرا هزار و یک عطر؟
+                    </Typography>
+                    <Typography color="GrayText" mt="20px" fontWeight="bold" variant="h6">
+                        با ما تفاوت در خرید را احساس کنید
+                    </Typography>
+                </Box>
+                <Box display="flex" justifyContent="center">
+                    <Divider />
+                    <Box display="grid" gridTemplateColumns="repeat(4,auto)">
+                        <Box textAlign="center">
+                            <WorkspacePremium />
+                            <Typography sx={{ color: "themeColor.main", width: "200px" }} fontWeight="bold" variant="h5">
+                                تضمین بالاترین کیفیت محصول موجود
+                            </Typography>
+                        </Box>
+                        <Box textAlign="center">
+                            <LocalShipping />
+                            <Typography sx={{ color: "themeColor.main", width: "200px" }} fontWeight="bold" variant="h5">
+                                ارسال رایگان به تهران و شهرستان ها
+                            </Typography>
+                        </Box>
+                        <Box textAlign="center">
+                            <NewReleases />
+                            <Typography sx={{ color: "themeColor.main", width: "200px" }} fontWeight="bold" variant="h5">
+                                پایین ترین نرخ ها نسبت به قیمت واردات
+                            </Typography>
+                        </Box>
+                        <Box textAlign="center">
+                            <SupportAgent />
+                            <Typography sx={{ color: "themeColor.main", width: "200px" }} fontWeight="bold" variant="h5">
+                                خدمات و مشاوره انلاین عطر
+                            </Typography>
+                        </Box>
+                    </Box>
+                </Box>
+                <Divider sx={{ width: "100%", m: "50px 0px" }} />
+            </Box>
         </>
     )
 }

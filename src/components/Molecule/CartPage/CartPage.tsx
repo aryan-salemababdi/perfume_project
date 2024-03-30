@@ -17,6 +17,7 @@ export interface ICartPage {
         }
     }[];
     onPayment?: (cash: string, submit: boolean) => void;
+    onSubmitClicked?: (cash: string, submit: boolean) => void;
 }
 
 const CartPage: NextPage<ICartPage> = ({ products }) => {
