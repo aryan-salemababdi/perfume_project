@@ -1,32 +1,40 @@
-"use client"
 import React, { useState } from 'react';
 import { NextPage } from 'next';
 import Image from 'next/image';
 import { ICartPage } from '@/components/Molecule/CartPage/CartPage';
-import { Box, Button, Card, Divider, Typography } from '@mui/material';
-import { VolumePerfumeBox, OfferBox, ProductCounter, HeaderCartPrice } from './styled';
+import {
+    Box,
+    Button,
+    Card,
+    Divider,
+    Typography
+} from '@mui/material';
+import {
+    VolumePerfumeBox,
+    OfferBox,
+    ProductCounter,
+    HeaderCartPrice
+} from './styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { increase, decrease, addItem, removeItem } from '@/stores/slices/productsSlice/productsSlice';
+import {
+    increase,
+    decrease,
+    addItem,
+    removeItem
+} from '@/stores/slices/productsSlice/productsSlice';
 
 // icons
 import SupportAgent from '@/components/Icons/SupportAgent';
 import NewReleases from '@/components/Icons/NewReleases';
 import LocalShipping from '@/components/Icons/LocalShipping';
-import WorkspacePremium from './../../Icons/WorkspacePremium';
+import WorkspacePremium from '@/components/Icons/WorkspacePremium';
 import DeleteIcon from '@/components/Icons/DeleteIcon';
 import Women from '@/components/Icons/Women';
 import Men from '@/components/Icons/Men';
 
-
-
-
 const CartMobile: NextPage<ICartPage> = ({ products, onSubmitClicked }) => {
-
     const state = useSelector((state: any) => state.products);
-
     const dispatch = useDispatch();
-
-
     const [offer, setOffer] = useState<boolean>(true);
 
     return (
@@ -39,128 +47,114 @@ const CartMobile: NextPage<ICartPage> = ({ products, onSubmitClicked }) => {
                     {products.length} کالا
                 </Typography>
             </Box>
-            {
-                products.map((product: any) => {
-                    return (
-                        <Box
-                            bgcolor="themeColor.light"
-                            width="100%"
-                            borderRadius="12px"
-                            key={product.id}
-                            mb={2}
+            {products.map((product: any) => (
+                <Box
+                    bgcolor="themeColor.light"
+                    width="100%"
+                    borderRadius="12px"
+                    key={product.id}
+                    mb={2}
+                >
+                    <Box display="flex">
+                        <Card sx={{
+                            boxShadow: 0,
+                            border: "1px solid #CBCECE",
+                            width: 120,
+                            height: "fit-content",
+                            m: "5px",
+                            p: "5px",
+                            borderRadius: "12px",
+                        }}
                         >
-                            <Box display="flex">
-                                <Card sx={{
-                                    boxShadow: 0,
-                                    border: "1px solid #CBCECE",
-                                    width: 120,
-                                    height: "fit-content",
-                                    m: "5px",
-                                    p: "5px",
-                                    borderRadius: "12px",
-                                }}
-                                >
-                                    <Box display="flex" >
-                                        {
-                                            offer ?
-                                                (
-                                                    <Box>
-                                                        <OfferBox sx={{ m: "2px 0px" }}>
-                                                            <Typography fontWeight="bold" variant="caption">
-                                                                23%
-                                                            </Typography>
-                                                        </OfferBox>
-                                                    </Box>
-                                                )
-                                                :
-                                                ""
-                                        }
-                                        <Box textAlign="center" m="5px 15px">
-                                            <span>
-                                                <Women />
-                                                <Men />
-                                            </span>
-                                        </Box>
-                                    </Box>
-                                    <Box textAlign="center">
-                                        <Image
-                                            height={80}
-                                            width={80}
-                                            src={product.image}
-                                            alt={`product image ${product.id}`}
-                                        />
-                                    </Box>
-                                    <Box textAlign="center">
-                                        <Divider sx={{ m: "10px" }} />
-                                        <Typography fontWeight="bold" variant="h6" color="themeColor.main">
-                                            شیرین و نباتی
-                                        </Typography>
-                                    </Box>
-                                </Card>
-                                <Box maxWidth="250px" mr="25px" textAlign="right">
-                                    <Typography color="CaptionText" fontWeight="bold" variant="h6">
-                                        بلو شنل پرمیوم ادیشن اورجینال
-                                    </Typography>
-                                    <Typography color="GrayText" fontWeight="bold" variant="h6" sx={{ m: "15px 0px" }}>
-                                        {product.category}
-                                    </Typography>
-                                    <Box
-                                        display="flex"
-                                        m="15px 0px"
-                                        justifyContent="start">
-                                        <VolumePerfumeBox sx={{ padding: "0px 20px" }}>
-                                            <Typography fontWeight="bold">
-                                                {product.rating.count} میل
+                            <Box display="flex" >
+                                {offer && (
+                                    <Box>
+                                        <OfferBox sx={{ m: "2px 0px" }}>
+                                            <Typography fontWeight="bold" variant="caption">
+                                                23%
                                             </Typography>
-                                        </VolumePerfumeBox>
+                                        </OfferBox>
                                     </Box>
-                                    {
-                                        offer ?
-                                            (
-                                                <Box>
-                                                    <Typography fontWeight="bold" color="error" variant="h6">
-                                                        ۱۶٫۰۰۰٫۰۰۰    <span>2 روز دیگر</span>
-                                                    </Typography>
-                                                </Box>
-                                            )
-                                            :
-                                            ""
-                                    }
-                                    <Box
-                                        display="flex"
-                                        m="15px 0px"
-                                        justifyContent="start">
-                                        <Typography sx={{ color: "themeColor.main" }} fontWeight="bold" variant="h5">
-                                            {product.price} تومان
-                                        </Typography>
-                                    </Box>
+                                )}
+                                <Box textAlign="center" m="5px 15px">
+                                    <span>
+                                        <Women />
+                                        <Men />
+                                    </span>
                                 </Box>
                             </Box>
-                            <Box display="flex" justifyContent="center" m="10px 0px">
-                                <ProductCounter sx={{
-                                    display: "grid",
-                                    gridTemplateColumns: "repeat(3,auto)",
-                                }}>
-                                    <Box sx={{ cursor: "pointer" }} onClick={() => dispatch(increase(product.id))}>
-                                        +
-                                    </Box>
-                                    <Box>
-                                        1
-                                    </Box>
-                                    <Box sx={{ cursor: "pointer" }}>
-                                        <DeleteIcon />
-                                    </Box>
-                                </ProductCounter>
+                            <Box textAlign="center">
+                                <Image
+                                    height={80}
+                                    width={80}
+                                    src={product.image}
+                                    alt={`product image ${product.id}`}
+                                />
                             </Box>
-                            <Box display="flex" justifyContent="center" m="15px 0px">
-                                <Typography color="GrayText" fontWeight="bold" variant="body1">
-                                    حداکثر 3 عدد
+                            <Box textAlign="center">
+                                <Divider sx={{ m: "10px" }} />
+                                <Typography fontWeight="bold" variant="h6" color="themeColor.main">
+                                    شیرین و نباتی
+                                </Typography>
+                            </Box>
+                        </Card>
+                        <Box maxWidth="250px" mr="25px" textAlign="right">
+                            <Typography color="CaptionText" fontWeight="bold" variant="h6">
+                                بلو شنل پرمیوم ادیشن اورجینال
+                            </Typography>
+                            <Typography color="GrayText" fontWeight="bold" variant="h6" sx={{ m: "15px 0px" }}>
+                                {product.category}
+                            </Typography>
+                            <Box
+                                display="flex"
+                                m="15px 0px"
+                                justifyContent="start">
+                                <VolumePerfumeBox sx={{ padding: "0px 20px" }}>
+                                    <Typography fontWeight="bold">
+                                        {product.rating.count} میل
+                                    </Typography>
+                                </VolumePerfumeBox>
+                            </Box>
+                            {offer && (
+                                <Box>
+                                    <Typography fontWeight="bold" color="error" variant="h6">
+                                        ۱۶٫۰۰۰٫۰۰۰    <span>2 روز دیگر</span>
+                                    </Typography>
+                                </Box>
+                            )}
+                            <Box
+                                display="flex"
+                                m="15px 0px"
+                                justifyContent="start">
+                                <Typography sx={{ color: "themeColor.main" }} fontWeight="bold" variant="h5">
+                                    {product.price} تومان
                                 </Typography>
                             </Box>
                         </Box>
-                    )
-                })
-            }
+                    </Box>
+                    <Box display="flex" justifyContent="center" m="10px 0px">
+                        <ProductCounter sx={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(3,auto)",
+                        }}>
+                            <Box sx={{ cursor: "pointer" }} onClick={() => dispatch(increase(product.id))}>
+                                +
+                            </Box>
+                            <Box>
+                                1
+                            </Box>
+                            <Box sx={{ cursor: "pointer" }}>
+                                <DeleteIcon />
+                            </Box>
+                        </ProductCounter>
+                    </Box>
+                    <Box display="flex" justifyContent="center" m="15px 0px">
+                        <Typography color="GrayText" fontWeight="bold" variant="body1">
+                            حداکثر 3 عدد
+                        </Typography>
+                    </Box>
+                </Box>
+            ))}
             <Box textAlign="center">
                 <Box display="flex" justifyContent="center">
                     <Card sx={{ width: "300px", boxShadow: 5 }}>
@@ -244,4 +238,3 @@ const CartMobile: NextPage<ICartPage> = ({ products, onSubmitClicked }) => {
 }
 
 export default CartMobile;
-

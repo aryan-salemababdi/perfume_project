@@ -12,14 +12,14 @@ import {
     Typography,
     Divider
 } from '@mui/material';
-import { HeaderCartPrice, ProductCounter, VolumePerfumeBox } from './styled';
+import {
+    HeaderCartPrice,
+    ProductCounter,
+    VolumePerfumeBox
+} from './styled';
 import CartMobile from './CartMobile';
 import { useDispatch, useSelector } from 'react-redux';
 import { increase } from '@/stores/slices/productsSlice/productsSlice';
-
-
-
-// icons
 import SupportAgent from '@/components/Icons/SupportAgent';
 import NewReleases from '@/components/Icons/NewReleases';
 import LocalShipping from '@/components/Icons/LocalShipping';
@@ -27,15 +27,11 @@ import WorkspacePremium from './../../Icons/WorkspacePremium';
 import DeleteIcon from '@/components/Icons/DeleteIcon';
 import Vector from '@/components/Icons/Vector';
 
-
-
 const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
-
     const state = useSelector((state: any) => state.products);
-
     const dispatch = useDispatch();
 
-    const { data, isLoading, isError } = useQuery({
+    const { data, isLoading } = useQuery({
         queryKey: ["products"],
         queryFn: () =>
             fetch("https://fakestoreapi.com/products").then(res =>
@@ -47,7 +43,6 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
     const onSubmitProduct = (cash: string, submit: boolean): void => {
         onPayment?.(cash, submit);
     }
-
 
     return (
         <>
@@ -91,110 +86,94 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                                 (
                                     data.map((product: any, index: number) => {
                                         return (
-                                            <>
-                                                <Box display="flex" m="10px 0px" key={product.id} >
-                                                    <Box display="flex" justifyContent={{ md: "start", sm: "start", xs: "center" }} flexWrap="wrap">
-                                                        <Card sx={{
-                                                            boxShadow: 0,
-                                                            border: "1px solid #CBCECE",
-                                                            maxWidth: 200,
-                                                            textAlign: "center",
-                                                            p: "20px",
-                                                            borderRadius: "12px",
-                                                        }}
-                                                        >
-                                                            <Image
-                                                                height="213"
-                                                                width="213"
-                                                                src={product.image}
-                                                                alt={`product image ${product.id}`}
-                                                            />
-                                                        </Card>
+                                            <Box display="flex" m="10px 0px" key={product.id} >
+                                                <Box display="flex" justifyContent={{ md: "start", sm: "start", xs: "center" }} flexWrap="wrap">
+                                                    <Card sx={{
+                                                        boxShadow: 0,
+                                                        border: "1px solid #CBCECE",
+                                                        maxWidth: 200,
+                                                        textAlign: "center",
+                                                        p: "20px",
+                                                        borderRadius: "12px",
+                                                    }}
+                                                    >
+                                                        <Image
+                                                            height="213"
+                                                            width="213"
+                                                            src={product.image}
+                                                            alt={`product image ${product.id}`}
+                                                        />
+                                                    </Card>
+                                                </Box>
+                                                <Box maxWidth="270px" mr="25px" textAlign={{ md: "right", sm: "right", xs: "center" }}>
+                                                    <Typography color="CaptionText" fontWeight="bold" variant="h6">
+                                                        {product.title}
+                                                    </Typography>
+                                                    <Typography color="GrayText" fontWeight="bold" variant="h6" sx={{ m: "15px 0px" }}>
+                                                        {product.category}
+                                                    </Typography>
+                                                    <Box
+                                                        display="flex"
+                                                        m="15px 0px"
+                                                        justifyContent={
+                                                            {
+                                                                md: "start",
+                                                                sm: "center",
+                                                                xs: "center"
+                                                            }
+                                                        }>
+                                                        <Typography color="GrayText">
+                                                            حجم خریداری شده:
+                                                        </Typography>
+                                                        <VolumePerfumeBox sx={{ margin: "0px 10px", padding: "0px 20px" }}>
+                                                            <Typography fontWeight="bold">
+                                                                {product.rating.count} میل
+                                                            </Typography>
+                                                        </VolumePerfumeBox>
                                                     </Box>
-                                                    <Box maxWidth="270px" mr="25px" textAlign={{ md: "right", sm: "right", xs: "center" }}>
-                                                        <Typography color="CaptionText" fontWeight="bold" variant="h6">
-                                                            {product.title}
+                                                    <Box
+                                                        display="flex"
+                                                        m="15px 0px"
+                                                        justifyContent={
+                                                            {
+                                                                md: "start",
+                                                                sm: "center",
+                                                                xs: "center"
+                                                            }
+                                                        }>
+                                                        <Typography sx={{ color: "themeColor.main" }} fontWeight="bold" variant="h5">
+                                                            {product.price}
                                                         </Typography>
-                                                        <Typography color="GrayText" fontWeight="bold" variant="h6" sx={{ m: "15px 0px" }}>
-                                                            {product.category}
+                                                        <Typography sx={{ m: "0px 30px" }} color="GrayText" fontWeight="bold" variant="h6">
+                                                            ارسال رایگان
                                                         </Typography>
-                                                        <Box
-                                                            display="flex"
-                                                            m="15px 0px"
-                                                            justifyContent={
-                                                                {
-                                                                    md: "start",
-                                                                    sm: "center",
-                                                                    xs: "center"
-                                                                }
-                                                            }>
-                                                            <Typography color="GrayText">
-                                                                حجم خریداری شده:
-                                                            </Typography>
-                                                            <VolumePerfumeBox sx={{ margin: "0px 10px", padding: "0px 20px" }}>
-                                                                <Typography fontWeight="bold">
-                                                                    {product.rating.count} میل
-                                                                </Typography>
-                                                            </VolumePerfumeBox>
-                                                        </Box>
-                                                        <Box
-                                                            display="flex"
-                                                            m="15px 0px"
-                                                            justifyContent={
-                                                                {
-                                                                    md: "start",
-                                                                    sm: "center",
-                                                                    xs: "center"
-                                                                }
-                                                            }>
-                                                            <Typography sx={{ color: "themeColor.main" }} fontWeight="bold" variant="h5">
-                                                                {product.price}
-                                                            </Typography>
-                                                            <Typography sx={{ m: "0px 30px" }} color="GrayText" fontWeight="bold" variant="h6">
-                                                                ارسال رایگان
-                                                            </Typography>
-                                                        </Box>
-                                                        <Box display="flex" alignItems="center" m="10px 0px">
-                                                            <ProductCounter sx={{
-                                                                display: "grid",
-                                                                gridTemplateColumns: "repeat(3,auto)",
-                                                            }}>
-                                                                <Box sx={{ cursor: "pointer" }} onClick={() => dispatch(increase(product.id))}>
-                                                                    +
-                                                                </Box>
-                                                                <Box>
-                                                                    1
-                                                                </Box>
-                                                                <Box sx={{ cursor: "pointer" }}>
-                                                                    <DeleteIcon />
-                                                                </Box>
-                                                            </ProductCounter>
-                                                            <Typography
-                                                                color="GrayText"
-                                                                fontWeight="bold"
-                                                                variant="body1"
-                                                                sx={{ m: "0px 10px" }}
-                                                            >
-                                                                حداکثر 3 عدد
-                                                            </Typography>
-                                                        </Box>
+                                                    </Box>
+                                                    <Box display="flex" alignItems="center" m="10px 0px">
+                                                        <ProductCounter sx={{
+                                                            display: "grid",
+                                                            gridTemplateColumns: "repeat(3,auto)",
+                                                        }}>
+                                                            <Box sx={{ cursor: "pointer" }} onClick={() => dispatch(increase(product.id))}>
+                                                                +
+                                                            </Box>
+                                                            <Box>
+                                                                1
+                                                            </Box>
+                                                            <Box sx={{ cursor: "pointer" }}>
+                                                                <DeleteIcon />
+                                                            </Box>
+                                                        </ProductCounter>
+                                                        <Typography
+                                                            color="GrayText"
+                                                            fontWeight="bold"
+                                                            variant="body1"
+                                                            sx={{ m: "0px 10px" }}
+                                                        >
+                                                            حداکثر 3 عدد
+                                                        </Typography>
                                                     </Box>
                                                 </Box>
-                                                {
-                                                    (index < data.length - 1) ? (
-                                                        <Box display="flex" justifyContent={{ md: "start", sm: "center", xs: "center" }} m="20px 0px">
-                                                            <Divider sx={
-                                                                {
-                                                                    width: "90%",
-                                                                    bgcolor: "themeColor.navy"
-                                                                }
-                                                            } />
-                                                        </Box>
-                                                    )
-                                                        :
-                                                        ""
-                                                }
-                                            </>
+                                            </Box>
                                         )
                                     })
                                 )
@@ -245,7 +224,7 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                         </Box>
                         <Box width={{ md: "300px", sm: "300px" }}>
                             <Typography sx={{ color: "themeColor.main" }} m="40px 0px" fontWeight="bold" variant="h6">
-                            <span><Vector /></span> ارسال رایگان به تمام کشور
+                                <span><Vector /></span> ارسال رایگان به تمام کشور
                             </Typography>
                             <Typography color="GrayText" m="40px 0px" fontWeight="bold" variant="h6">
                                 هزینه سبد هنوز پرداخت نشده و در صورت اتمام موجودی از سبد حذف خواهد شد.
