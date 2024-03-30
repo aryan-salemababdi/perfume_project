@@ -93,7 +93,7 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                                         return (
                                             <>
                                                 <Box display="flex" m="10px 0px" key={product.id} >
-                                                    <Box display="flex" justifyContent={{ md: "start", sm: "center", xs: "center" }} flexWrap="wrap">
+                                                    <Box display="flex" justifyContent={{ md: "start", sm: "start", xs: "center" }} flexWrap="wrap">
                                                         <Card sx={{
                                                             boxShadow: 0,
                                                             border: "1px solid #CBCECE",
@@ -111,7 +111,7 @@ const Cart: NextPage<ICartPage> = ({ products, onPayment }) => {
                                                             />
                                                         </Card>
                                                     </Box>
-                                                    <Box maxWidth="270px" mr="25px" textAlign={{ md: "right", sm: "center", xs: "center" }}>
+                                                    <Box maxWidth="270px" mr="25px" textAlign={{ md: "right", sm: "right", xs: "center" }}>
                                                         <Typography color="CaptionText" fontWeight="bold" variant="h6">
                                                             {product.title}
                                                         </Typography>
