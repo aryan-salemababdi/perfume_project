@@ -2,6 +2,7 @@
 import { NextPage } from 'next';
 import React, { useState } from 'react';
 import Cart from '@/components/Atom/Cart/Cart';
+import CheckoutPage from '../Checkout/CheckoutPage';
 
 export interface ICartPage {
     products: {
@@ -23,16 +24,26 @@ export interface ICartPage {
 const CartPage: NextPage<ICartPage> = ({ products }) => {
 
     const [submitProducts, setSubmitProducts] = useState<boolean>(false);
-    const [resultPrice, setResultPrice] = useState<string>("0")
+    const [lastPrice, setlastPrice] = useState<string>("0")
 
     return (
-        <Cart
-            products={products}
-            onPayment={(cash, submit) => {
-                setResultPrice(cash)
-                setSubmitProducts(submit)
-            }}
-        />
+        <>
+            {
+                submitProducts ? (
+                    <CheckoutPage lastPrice={lastPrice} />
+                )
+                    :
+                    (
+                        <Cart
+                            products={products}
+                            onPayment={(cash, submit) => {
+                                setlastPrice(cash)
+                                setSubmitProducts(submit)
+                            }}
+                        />
+                    )
+            }
+        </>
     )
 }
 

@@ -6,6 +6,7 @@ const palette = {
     navy: "#9999B3",
     light: "#F0F0F0",
     dark: "#303337",
+    secendary: "#660000",
   },
 };
 

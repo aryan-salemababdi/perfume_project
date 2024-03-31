@@ -1,21 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { sumPrice, sumQuantity } from "./functions";
 
-interface ProductItem {
-    id: number;
-    title: string;
-    price: string;
-    description: string;
-    category: string;
-    image: string;
-    rating: {
-        rate: number;
-        count: number
-    }[];
-}
 
 interface ProductsState {
-    selectedItems: ProductItem[];
+    selectedItems: [];
     totalPrice: number;
     productCounter: number;
     checkout: boolean;
@@ -32,9 +20,9 @@ const productsSlice = createSlice({
     name: "products",
     initialState,
     reducers: {
-        addItem: (state, action: PayloadAction<ProductItem>) => {
+        addItem: (state: any, action: PayloadAction<any>) => {
             const item = action.payload;
-            const existingItem = state.selectedItems.find(i => i.id === item.id);
+            const existingItem = state.selectedItems.find((i: any) => i.id === item.id);
             if (existingItem) {
                 existingItem.quantity++;
             } else {
@@ -44,21 +32,21 @@ const productsSlice = createSlice({
             state.productCounter = sumQuantity(state.selectedItems);
             state.checkout = false;
         },
-        removeItem: (state, action: PayloadAction<string>) => {
-            state.selectedItems = state.selectedItems.filter(item => item.id !== action.payload);
+        removeItem: (state: any, action: PayloadAction<any>) => {
+            state.selectedItems = state.selectedItems.filter((item: any) => item.id !== action.payload);
             state.totalPrice = sumPrice(state.selectedItems);
             state.productCounter = sumQuantity(state.selectedItems);
         },
-        increase: (state, action: PayloadAction<string>) => {
-            const item = state.selectedItems.find(i => i.id === action.payload);
+        increase: (state: any, action: PayloadAction<any>) => {
+            const item = state.selectedItems.find((i: any) => i.id === action.payload);
             if (item) {
                 item.quantity++;
                 state.totalPrice = sumPrice(state.selectedItems);
                 state.productCounter = sumQuantity(state.selectedItems);
             }
         },
-        decrease: (state, action: PayloadAction<string>) => {
-            const item = state.selectedItems.find(i => i.id === action.payload);
+        decrease: (state: any, action: PayloadAction<any>) => {
+            const item = state.selectedItems.find((i: any) => i.id === action.payload);
             if (item && item.quantity > 1) {
                 item.quantity--;
                 state.totalPrice = sumPrice(state.selectedItems);
@@ -81,5 +69,4 @@ export const {
     decrease,
     checkout
 } = productsSlice.actions;
-
 export default productsSlice.reducer;
