@@ -1,7 +1,7 @@
 import Checkout from "@/components/Atom/Checkout/Checkout";
 import { NextPage } from "next";
 
-interface ICheckout {
+export interface ICheckout {
   lastPrice: string;
 }
 
